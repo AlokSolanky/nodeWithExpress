@@ -1,14 +1,24 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
-app.use((req,res,next)=>
+app.use(bodyParser.urlencoded({extended:false}));
+
+app.use('/add-product', (req,res,next)=>
 {
-    console.log(`<h1>Hello world</h1>`);
-    next();
+    res.send(
+      `<form method="POST" action="products"><input name = "btn_val" type"text"><br><input name="size" type="number"><button type="submit">Add</button></form>`
+    );
+
 })
-app.use((req,res,next)=>
+app.use("/products",(req,res,next)=>
 {
-    res.send(`<h2> this is second middleware</h2>`);
+    console.log(req.body.btn_val);
+    console.log(req.body.size);
+    res.redirect("/");
 })
+app.use("/", (req, res) => {
+  res.send("Submitted");
+});
 
 app.listen(4000);
