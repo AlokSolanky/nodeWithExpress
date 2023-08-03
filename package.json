@@ -1,0 +1,23 @@
+{
+  "name": "task2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlokSolanky/nodeWithExpress.git"
+  },
+  "author": "alok",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlokSolanky/nodeWithExpress/issues"
+  },
+  "homepage": "https://github.com/AlokSolanky/nodeWithExpress#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
