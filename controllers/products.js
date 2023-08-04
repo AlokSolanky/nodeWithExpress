@@ -1,14 +1,16 @@
-
-const products = [];
+const Product = require("../models/product");
+const fs = require("fs");
 
 exports.getProducts = (req, res, next) => {
-  res.render("shop", {
-    prods: products,
-    pageTitle: "Shop",
-    path: "/",
-    hasProducts: products.length > 0,
-    activeShop: true,
-    productCSS: true,
+  const products = Product.fetchAll((products) => {
+    res.render("shop", {
+      prods: products,
+      pageTitle: "Shop",
+      path: "/",
+      hasProducts: products.length > 0,
+      activeShop: true,
+      productCSS: true,
+    });
   });
 };
 exports.getAddProduct = (req, res, next) => {
@@ -22,6 +24,13 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 module.exports.postAddProduct = (req, res, next) => {
-  products.push({ title: req.body.title });
+  const product = new Product(req.body.title);
+  product.save();
+
+  fs.appendFile("products.txt", product, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
   res.redirect("/");
 };
