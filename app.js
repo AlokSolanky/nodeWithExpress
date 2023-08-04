@@ -1,33 +1,27 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+const adminRoute = require('./routes/admin');
+const shopRoute = require('./routes/shop');
+const path = require('path');
 
-
+const root = require('./utils/path');
 const app = express();
 app.use(bodyParser.urlencoded({extended:false}));
+app.use(express.static(path.join(__dirname,'public')));
 
-app.get("/login",(req,res,next)=>
+app.use(adminRoute);
+app.use(shopRoute);
+app.get('/contact',(req,res)=>
 {
-    res.send(
-      `<form method="POST" action="/" onsubmit="localStorage.setItem('user',document.getElementById('user').value)"><input name = "username" id="user" type="text"><button type="submit">Login</button></form>`
-    );
+    res.sendFile(path.join(root,'views','contactus.html'));
 })
-app.get("/",(req,res,next)=>
+app.post('/success',(req,res)=>
 {
-    let data = fs.readFileSync("messages.txt","utf-8");
-    if(!data)
-    {
-        data = "No Messages Yet";
-    }
-    console.log(data);
-    res.send(
-      `<p>${data} <br> <form method="POST" action="/" onsubmit="document.getElementById('user').value = localStorage.getItem('user')"><input name = "message" type"text"><input name="user" type="hidden" id="user"><button type="submit">Send</button></form>`
-    );
+    res.status(200).send("Form Submitted Successfull");
 })
-app.post("/",(req,res,next)=>
+app.use((req,res)=>
 {
-    console.log(req.body)
-    fs.appendFileSync("messages.txt", `${req.body.user} : ${req.body.message} \n`);
-    res.redirect("/");
-})
+    res.status(404).sendFile(path.join(root,'views','404.html'));
+});
+
 app.listen(4000);
