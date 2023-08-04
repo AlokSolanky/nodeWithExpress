@@ -11,7 +11,7 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const contactUs = require('./routes/contact');
-const success = require('./routes/success');
+const success = require('./routes/success')
 const {throwError} = require('./controllers/error');
 
 

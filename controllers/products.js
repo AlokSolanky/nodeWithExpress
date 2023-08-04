@@ -2,7 +2,7 @@ const Product = require("../models/product");
 const fs = require("fs");
 
 exports.getProducts = (req, res, next) => {
-  const products = Product.fetchAll((products) => {
+  Product.fetchAll((products) => {
     res.render("shop", {
       prods: products,
       pageTitle: "Shop",
@@ -26,11 +26,5 @@ exports.getAddProduct = (req, res, next) => {
 module.exports.postAddProduct = (req, res, next) => {
   const product = new Product(req.body.title);
   product.save();
-
-  fs.appendFile("products.txt", product, (err) => {
-    if (err) {
-      console.log(err);
-    }
-  });
   res.redirect("/");
 };

@@ -8,9 +8,10 @@ module.exports = class Product{
     save()
     {
         const p = path.join(__dirname,"..","data","product.json");
+        console.log(__dirname);
         fs.readFile(p,(err,fileContent)=>
         {
-            const products =  [];
+            let products =  [];
             if(!err)
             {
                 products = JSON.parse(fileContent);
@@ -30,9 +31,9 @@ module.exports = class Product{
         {
             if(err)
             {
-                return cb([]);
+                cb([]);
             }
-            return cb(JSON.parse(fileContent));
+            cb(JSON.parse(fileContent));
         })
     }
 }
